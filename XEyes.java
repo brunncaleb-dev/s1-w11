@@ -1,7 +1,8 @@
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-import java.awt.event.*;
+
 
 /*
  * XEyes: 
@@ -9,8 +10,9 @@ import java.awt.event.*;
  * of this class.
  */
 
-public class XEyes extends JPanel implements MouseListener{
-
+public class XEyes extends JPanel implements MouseListener, MouseMotionListener {
+    private int xClick = -9999;
+    private int yClick = -9999;
 
     private String fileName = "einstein.jpg";
 
@@ -35,6 +37,7 @@ public class XEyes extends JPanel implements MouseListener{
         eye_1 = new Eye(269, 290, 49, 37);
         eye_2 = new Eye(372, 290, 49, 37);
         addMouseListener(this);
+        addMouseMotionListener(this);
         myFrame.setVisible(true);
         }
 
@@ -54,16 +57,33 @@ public class XEyes extends JPanel implements MouseListener{
         g.drawImage(myPic.getImage(), 0, 0, this);
         eye_1.draw(g);
         eye_2.draw(g);
+        if(xClick != -9999 && yClick != -9999){
+        eye_1.lazerEyes(xClick, yClick, g);
+        eye_2.lazerEyes(xClick, yClick, g);
+        }
+        
     }
     
     // move the pupil when the mouse is clicked
     public void mouseClicked (MouseEvent event) {
-        eye_1.movePupil(event.getX(), event.getY());
-        eye_2.movePupil(event.getX(), event.getY());
-        
+        // eye_1.movePupil(event.getX(), event.getY());
+        // eye_2.movePupil(event.getX(), event.getY());
+
         repaint();
     }
-  
+
+    public void mouseDragged(MouseEvent event){
+		eye_1.movePupil(event.getX(), event.getY());
+        eye_2.movePupil(event.getX(), event.getY());
+
+        this.xClick = event.getX();
+		this.yClick = event.getY();
+		
+        repaint();
+	}
+    public void mouseMoved (MouseEvent event){
+
+    }
     public void mouseReleased (MouseEvent event) {
     }
     
@@ -74,6 +94,11 @@ public class XEyes extends JPanel implements MouseListener{
     }
     
     public void mouseExited (MouseEvent event) {
+    }
+
+
+    public static void main(String[] args) {
+        new XEyes();
     }
     
 } // end class

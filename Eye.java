@@ -111,6 +111,14 @@ public class Eye {
         return ( (slope * (pupX - eyeCenterX)) + eyeCenterY );
     }
     
+    public void lazerEyes(int clickX, int clickY, Graphics g){
+        g.setColor(Color.RED);
+        Graphics2D g2d = (Graphics2D) g;
+		g2d.setStroke(new BasicStroke(5.0f));
+        g.drawLine(clickX, clickY, pupilX, pupilY);
+       
+
+    }
     
     
 
