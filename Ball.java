@@ -9,7 +9,7 @@ public class Ball{
     }
 
     public double calcDistance(Ball b){
-        return Math.sqrt(Math.pow(this.x - b.x, 2) + Math.pow(this.y - b.y, 2))
+        return Math.sqrt(Math.pow(this.x - b.x, 2) + Math.pow(this.y - b.y, 2));
     }
 
     /**
@@ -23,7 +23,15 @@ public class Ball{
      */
     public boolean overlap(Ball b){
         //do this
-
+        return (calcDistance(b) < (this.radius + b.radius));
     }
+    public static void main(String[] args) {
+        Ball b1 = new Ball(1.0, 5, 10);
+        Ball b2 = new Ball(1.0, 2, 5);
+        Ball b3 = new Ball(1.0, 5, 10);
 
+        System.out.println(b1.calcDistance(b2));
+        System.out.println(b1.overlap(b3));
+        System.out.println(b2.overlap(b1));
+    }
 }

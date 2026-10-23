@@ -116,8 +116,13 @@ public class Eye {
         Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(5.0f));
         g.drawLine(clickX, clickY, pupilX, pupilY);
-       
+    }
+    public void inEye(int xClick,int yClick, Graphics g){
+        g.setColor(Color.BLACK);
+        if(((eyeCenterX-eyeWidth) <= xClick || xClick <= (eyeCenterX+eyeWidth))&&(((eyeCenterY-eyeHeight) <= yClick) || yClick <= (eyeCenterY+eyeHeight)));
+        g.fillOval(pupilX - pupilRadius, pupilY - pupilRadius, 2 * pupilRadius, 2 * pupilRadius);
 
+        
     }
     
     

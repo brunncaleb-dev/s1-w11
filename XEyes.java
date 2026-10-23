@@ -2,6 +2,7 @@ import java.awt.Graphics;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 
 /*
@@ -21,6 +22,7 @@ public class XEyes extends JPanel implements MouseListener, MouseMotionListener 
     
     // Each eye gets an instance variable.
     private Eye eye_1;
+    private ArrayList<Eye>eyes = new ArrayList<>();
     private Eye eye_2;
     
 
@@ -55,21 +57,22 @@ public class XEyes extends JPanel implements MouseListener, MouseMotionListener 
     public void paintComponent(Graphics g) {
   
         g.drawImage(myPic.getImage(), 0, 0, this);
+        for(int i = 0; i<eyes.size();i++){
+            eyes.get(i).draw(g);
+        }
         eye_1.draw(g);
         eye_2.draw(g);
         if(xClick != -9999 && yClick != -9999){
         eye_1.lazerEyes(xClick, yClick, g);
         eye_2.lazerEyes(xClick, yClick, g);
+        eye_1.inEye(xClick, yClick, g);
+        eye_2.inEye(xClick, yClick, g);
         }
         
     }
     
     // move the pupil when the mouse is clicked
-    public void mouseClicked (MouseEvent event) {
-        // eye_1.movePupil(event.getX(), event.getY());
-        // eye_2.movePupil(event.getX(), event.getY());
-
-        repaint();
+    public void mouseClicked (MouseEvent event, Graphics g) {
     }
 
     public void mouseDragged(MouseEvent event){
@@ -82,12 +85,20 @@ public class XEyes extends JPanel implements MouseListener, MouseMotionListener 
         repaint();
 	}
     public void mouseMoved (MouseEvent event){
+        for(int i = 0; i<eyes.size();i++){
+            eyes.get(i).movePupil(event.getX(), event.getY());
+        }
 
     }
     public void mouseReleased (MouseEvent event) {
     }
     
     public void mousePressed (MouseEvent event) {
+        Eye neweye = new Eye(event.getX(),event.getY(),49,37);
+        neweye.movePupil(event.getX(), event.getY());
+        eyes.add(neweye);
+        repaint();
+
     }
     
     public void mouseEntered (MouseEvent event) {
